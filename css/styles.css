@@ -1,6 +1,7 @@
 img {
 	width: 15%;
 	height: 15%;
+	vertical-align: middle;
 	/*padding: 2.5%;*/
 }
 
@@ -9,16 +10,62 @@ body {
 	text-align: center;
 	margin: 0px;
 	font-size: 100%;
+	background-color: #222831;
+	color: #eeeeee;
 }
 
 table {
 	width: 100%;
+	font-size: 125%;
 	margin-left: auto;
 	margin-right: auto;
 }
 
 td {
 	width: 50%;
+	font-size: 125%;
+	color: #eeeeee;
+}
+
+h1 {
+	display: inline-block;
+}
+
+tr:nth-child(even) {
+    background-color: #393e46;
+}
+
+tr:nth-child(odd) {
+    background-color: #00adb5;
+}
+
+.center {
+	 margin: auto;
+	 width: 50%;
+	 padding: 0px;
+	 position: relative;
+}
+
+.right {
+	float: right;
+	height: 100%;
+	padding: 0px;
+	display: inline-block;
+}
+
+.left {
+	float: left;
+	height: 100%;
+	padding: 0px;
+	display: inline-block;
+}
+
+.vertical-center {
+	 margin: 0;
+	  position: absolute;
+	  top: 50%;
+	  -ms-transform: translateY(-50%);
+	  transform: translateY(-50%);
 }
 
 /*bruh*/
