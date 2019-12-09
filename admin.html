@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ordinate Admin</title>
+	<link rel="stylesheet" type="text/css" href="css/addPatient.css">
+	<link rel="icon" type="text/css" href="images/favicon.ico">
+	<!-- <script type="text/javascript" src=""></script> -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body id="colourTheme">
+	<form>
+		<div class="form-group">
+			<label for="inputID">Patient Ordinate-ID:</label>
+			<input type="text" class="form-control" aria-describedly="idHelp" id="inputID" placeholder="Enter email">
+			<small id="idHelp" class="form-text text-muted">Remember enter Ordinate-ID in user profile not another ID (e.g. medicare, record no, name).</small>
+		</div>
+		<div class="form-group">
+			<label for="inputDoctor">Requested Doctor:</label>
+			<input id="inputDoctor" class="form-control" type="text" placeholder="Doctor patient asked for">
+		</div>
+		<button type="submit" class="btn btn-dark">Queue Patient</button>
+	</form>
+</body>
+</html>

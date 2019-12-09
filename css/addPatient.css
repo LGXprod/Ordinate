@@ -1,0 +1,13 @@
+form {
+	width: 50%;
+	margin: auto;
+	margin-top: 10%;
+	padding: 15px;
+	position: relative;
+	background-color: #00adb5;
+	border-radius: 15px;
+}
+
+#colourTheme {
+	background-color: #222831;
+}
