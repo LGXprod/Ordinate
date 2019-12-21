@@ -1,12 +1,39 @@
 const fs = require("fs");
 const express = require("express");
+var frontEnd = "/Users/matthew/Documents/Projects/Ordinate/Saas/Front-End/";
 
-const app = express();
+const listApp = express();
+const adminApp = express();
 
-app.get("/", function(req, res){
-	res.send("hello");
-});
-
-app.listen(3000, function(){
+listApp.listen(3000, function(){
 	console.log("Server started on port 3000");
 });
+
+	listApp.get("/", function(req, res){
+		res.sendFile(frontEnd + "index.html");
+	});
+
+	listApp.get('/css/styles.css', function(req, res) {
+	  res.sendFile(frontEnd + "css/styles.css");
+	});
+
+	listApp.get("/images/logo.png", function(req, res){
+		res.sendFile(frontEnd + "/images/logo.png");
+	});
+
+
+adminApp.listen(4000, function(){
+	console.log("Server started on port 4000");
+});
+
+	adminApp.get("/", function(req, res){
+		res.sendFile(frontEnd + "admin.html");
+	});
+
+	adminApp.get("/css/addPatient.css", function(req, res){
+		res.sendFile(frontEnd + "css/addPatient.css");
+	});
+
+	adminApp.post("/", function(req, res){
+		res.send("work");
+	});
