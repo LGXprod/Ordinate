@@ -21,6 +21,10 @@ listApp.listen(3000, function(){
 		res.sendFile(frontEnd + "/images/logo.png");
 	});
 
+	listApp.get("/js/index.js", function(req, res){
+		res.sendfile(frontEnd + "js/index.js");
+	});
+
 
 adminApp.listen(4000, function(){
 	console.log("Server started on port 4000");
@@ -30,6 +34,10 @@ adminApp.listen(4000, function(){
 		res.sendFile(frontEnd + "admin.html");
 	});
 
+	adminApp.get("/js/admin.js", function(req, res){
+		res.sendfile(frontEnd + "js/admin.js");
+	});
+
 	adminApp.get("/css/addPatient.css", function(req, res){
 		res.sendFile(frontEnd + "css/addPatient.css");
 	});
@@ -37,3 +45,5 @@ adminApp.listen(4000, function(){
 	adminApp.post("/", function(req, res){
 		res.send("work");
 	});
+
+	
