@@ -1,5 +1,8 @@
 const fs = require("fs");
 const express = require("express");
+const bodyParser = require("body-parser");
+const patient = require("patient.js");
+
 var frontEnd = "/Users/matthew/Documents/Projects/Ordinate/Saas/Front-End/";
 
 const listApp = express();
@@ -42,8 +45,12 @@ adminApp.listen(4000, function(){
 		res.sendFile(frontEnd + "css/addPatient.css");
 	});
 
+	adminApp.use(bodyParser.urlencoded({extended: true}));
+
 	adminApp.post("/", function(req, res){
-		res.send("work");
+		newPatient = new Patient(req.body.id, req.body.doctor);
+		console.log(newPatient.getID());
 	});
 
+	
 	
