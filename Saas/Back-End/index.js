@@ -1,7 +1,7 @@
 const fs = require("fs");
 const express = require("express");
 const bodyParser = require("body-parser");
-const patient = require("patient.js");
+// const patient = require("patient.js");
 
 var frontEnd = "/Users/matthew/Documents/Projects/Ordinate/Saas/Front-End/";
 
@@ -48,9 +48,8 @@ adminApp.listen(4000, function(){
 	adminApp.use(bodyParser.urlencoded({extended: true}));
 
 	adminApp.post("/", function(req, res){
-		newPatient = new Patient(req.body.id, req.body.doctor);
-		console.log(newPatient.getID());
+		var id = req.body.id;
+		var doctor = req.body.doctor;
+		// newPatient = new Patient(req.body.id, req.body.doctor);
+		// console.log(newPatient.getID());
 	});
-
-	
-	
