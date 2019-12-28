@@ -1,3 +1,7 @@
+create database if not exists ordinateDB;
+
+use ordinateDB;
+
 create table patient(
     ordinateID Integer NOT NULL,
     fName varchar(40),
@@ -19,8 +23,8 @@ create table doctor(
     fName varchar(40),
     sName varchar(40),
     avgTimeWPat numeric(4,4),
-    constraint doctorPK primary key (doctorID)
-    constraint clientFK foreign key clientID references client(clientID)
+    constraint doctorPK primary key (doctorID),
+    constraint clientFK foreign key (clientID) references client(clientID)
 );
 
     -- Need to revise this table heavily, doesn't make sense. Move some attributes to the doctor table.
@@ -29,15 +33,15 @@ create table doctor(
         numPatSeen smallint
     );
 
-create table list(
+create table qlist(
     eta numeric(4,4),
-    constraint patientFK foreign key ordinateID references patient(ordinateID),
-    constraint doctorFK foreign key doctorID references doctor(doctorID)
+    constraint patientFK foreign key (ordinateID) references patient(ordinateID),
+    constraint doctorFK foreign key (doctorID) references doctor(doctorID)
 );
 
-create table client(
+create table client_com(
     clientID Integer NOT NULL,
     comName varchar(30),
     paymentStatus boolean,
-    constraint clientPK primary key clientID
+    constraint clientPK primary key (clientID)
 );

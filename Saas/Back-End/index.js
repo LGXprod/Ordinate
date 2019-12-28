@@ -1,12 +1,24 @@
 const fs = require("fs");
 const express = require("express");
 const bodyParser = require("body-parser");
+const mysql = require("mysql");
 // const patient = require("patient.js");
 
 var frontEnd = "/Users/matthew/Documents/Projects/Ordinate/Saas/Front-End/";
 
 const listApp = express();
 const adminApp = express();
+
+var connection = mysql.createConnection({
+	host: "localhost",
+	user: "root",
+	password: "password", //This is not the actual password, change it so that it can connect to sql server but change it back to password when committing
+});
+
+connection.connect(function(err){
+	if (err) throw err;
+	console.log("Connected!");
+});
 
 listApp.listen(3000, function(){
 	console.log("Server started on port 3000");
