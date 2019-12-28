@@ -13,7 +13,16 @@ form {
 }
 
 #headingTheme {
-	color: #eeeeee;
+	/* color: #eeeeee; */
 	text-align: center;
 	padding: 5%;
+}
+
+.navSpacing {
+	padding-left: 75px;
+	padding-right: 75px;
+}
+
+#logo {
+	height: 45px;
 }

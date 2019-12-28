@@ -13,6 +13,7 @@ var connection = mysql.createConnection({
 	host: "localhost",
 	user: "root",
 	password: "password", //This is not the actual password, change it so that it can connect to sql server but change it back to password when committing
+	database: "ordinateDB"
 });
 
 connection.connect(function(err){
@@ -60,8 +61,17 @@ adminApp.listen(4000, function(){
 	adminApp.use(bodyParser.urlencoded({extended: true}));
 
 	adminApp.post("/", function(req, res){
-		var id = req.body.id;
+		var id = req.body.ID;
 		var doctor = req.body.doctor;
+
+		var queryString = "insert into patient (ordinateID) values (" + id + ")";
+		console.log(queryString);
+
+		connection.query(queryString, function(err, result, fields){
+			if (err) throw err;
+			console.log(result);
+		});
+
 		// newPatient = new Patient(req.body.id, req.body.doctor);
 		// console.log(newPatient.getID());
 	});
