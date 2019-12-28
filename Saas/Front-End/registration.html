@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Ordinate Admin</title>
+	<title>Registration</title>
 	<link rel="stylesheet" type="text/css" href="css/addPatient.css">
 	<link rel="icon" type="text/css" href="images/favicon.ico">
 	<!-- <script type="text/javascript" src=""></script> -->
@@ -9,7 +9,7 @@
 </head>
 <body id="formTheme">
 
-	<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center"></nav>
 
 		<a class="navbar-brand" id="logo">
 			<img src="images/logo2.png" id="logo">
@@ -30,23 +30,13 @@
 				<a class="nav-link">Statistics</a>
 			</li>
 		</ul>
+
 	</nav>
 
-	<form action="/" method="post">
-		<div class="form-group">
-			<label for="inputID">Patient Ordinate-ID:</label>
-			<input type="text" class="form-control" aria-describedly="idHelp" id="inputID" placeholder="Enter ID" name="ID">
-			<small id="idHelp" class="form-text text-muted">Remember enter Ordinate-ID in user profile not another ID (e.g. medicare, record no, name).</small>
-		</div>
-		<div class="form-group">
-			<label for="inputDoctor">Requested Doctor:</label>
-			<input id="inputDoctor" class="form-control" type="text" placeholder="Doctor patient asked for" name="doctor">
-		</div>
-		<button type="submit" class="btn btn-dark">Queue Patient</button>
-	</form>
+	<!-- <form>
+		<label for="inputFName">First Name</label>
+		<input id="inputFName" aria-describedby="fNameHelp" placeholder="Enter patient's first name" name="fName">
+	</form> -->
 
 </body>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="js/admin.js"></script>
 </html>
