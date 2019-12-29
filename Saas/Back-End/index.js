@@ -74,18 +74,27 @@ adminApp.listen(4000, function(){
 
 	adminApp.post("/", function(req, res){
 		var id = req.body.ID;
-		var doctor = req.body.doctor;
+		var doctorID = req.body.doctor;
 
-		var queryString = "insert into qlist (ordinateID) values (" + id + ")";
-		console.log(queryString);
+		var validQuery = "select ordinateID from patient where ordinateID=" + id + ";";
+		console.log(validQuery);
 
-		connection.query(queryString, function(err, result, fields){
+		connection.query(validQuery, function(err, result, fields){
 			if (err) throw err;
-			console.log(result);
-		});
+			console.log(result[0].ordinateID);
+			if (result[0].ordinateID) {
+				console.log("Valid id");
 
-		// newPatient = new Patient(req.body.id, req.body.doctor);
-		// console.log(newPatient.getID());
+				var insertQuery = "insert into qlist (ordinateID, doctorID) values (" + id + ", " 
+				+ doctorID + ")";
+				console.log(insertQuery);
+
+				connection.query(insertQuery, function(err, result, fields){
+					if (err) throw err;
+					console.log("Successful");
+				});
+			}
+		});
 	});
 
 	adminApp.post("/registration.html", function(req, res){
