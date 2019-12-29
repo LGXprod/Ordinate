@@ -9,7 +9,7 @@
 </head>
 <body id="formTheme">
 
-	<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center"></nav>
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
 
 		<a class="navbar-brand" id="logo">
 			<img src="images/logo2.png" id="logo">
@@ -18,7 +18,7 @@
 
 		<ul class="navbar-nav">
 			<li class="navbar-item navSpacing">
-				<a class="nav-link" href="admin.html">Queuing</a>
+				<a class="nav-link" href="/">Queuing</a>
 			</li>
 			<li class="navbar-item navSpacing">
 				<a class="nav-link" href="registration.html">Registration</a>
@@ -30,13 +30,32 @@
 				<a class="nav-link">Statistics</a>
 			</li>
 		</ul>
-
 	</nav>
 
-	<!-- <form>
-		<label for="inputFName">First Name</label>
-		<input id="inputFName" aria-describedby="fNameHelp" placeholder="Enter patient's first name" name="fName">
-	</form> -->
+	<form action="/registration.html" method="post">
 
+		<div class="form-group">
+			<label for="inputFName">First Name:</label>
+			<input id="inputFName" class="form-control" aria-describedby="fNameHelp" placeholder="Enter patient's first name" type="text"
+			name="fName">
+		</div>
+
+		<div class="form-group">
+			<label for="inputSName">Last Name:</label>
+			<input id="inputSName" class="form-control" aria-describedby="sNameHelp" placeholder="Enter patient's last name" type="text"
+			name="sName">
+		</div>
+
+		<div class="form-group">
+			<label for="inputDOB">Date of Birth:</label>
+			<!-- Will change this to a date picker at a later time -->
+			<input id="inputDOB" class="form-control" aria-describedby="DOBHelp" placeholder="Enter patient's DOB" type="date"
+			name="dob"> 
+		</div>
+
+		<button type="submit" class="btn btn-dark">Add New Patient</button>
+
+	</form>
+	
 </body>
 </html>

@@ -50,6 +50,18 @@ adminApp.listen(4000, function(){
 		res.sendFile(frontEnd + "admin.html");
 	});
 
+	adminApp.get("/registration.html", function(req, res){
+		res.sendFile(frontEnd + "registration.html");
+	});
+
+	adminApp.get("/admin.html", function(req, res){
+		res.sendFile(frontEnd + "admin.html");
+	});
+
+	adminApp.get("/images/logo2.png", function(req, res){
+		res.sendFile(frontEnd + "images/logo2.png");
+	});
+
 	adminApp.get("/js/admin.js", function(req, res){
 		res.sendfile(frontEnd + "js/admin.js");
 	});
@@ -64,7 +76,7 @@ adminApp.listen(4000, function(){
 		var id = req.body.ID;
 		var doctor = req.body.doctor;
 
-		var queryString = "insert into patient (ordinateID) values (" + id + ")";
+		var queryString = "insert into qlist (ordinateID) values (" + id + ")";
 		console.log(queryString);
 
 		connection.query(queryString, function(err, result, fields){
@@ -74,4 +86,23 @@ adminApp.listen(4000, function(){
 
 		// newPatient = new Patient(req.body.id, req.body.doctor);
 		// console.log(newPatient.getID());
+	});
+
+	adminApp.post("/registration.html", function(req, res){
+		var fName = req.body.fName;
+		var sName = req.body.sName;
+		var dob = req.body.dob;
+
+		var queryString = "insert into patient (ordinateID, fName, sName, dob)" + " values (" + Math.round(Math.random()*1000)	
+		+ ", '" + fName + "', '" + sName + "', '" + dob + "')";
+
+		console.log(queryString);
+
+		connection.query(queryString, function(err, result){
+			if (err) throw err;
+			console.log("Successful");
+		});
+
+		res.write("<script>alert(' Added: " + fName + " as a new patient')</script>");
+		res.redirect('back');
 	});
