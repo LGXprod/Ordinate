@@ -16,7 +16,7 @@ console.log(ip.address());
 var connection = mysql.createConnection({
 	host: "localhost",
 	user: "root",
-	password: "", //This is not the actual password, change it so that it can connect to sql server but change it back to password when committing
+	password: "64Guardian07!", //This is not the actual password, change it so that it can connect to sql server but change it back to password when committing
 	database: "ordinateDB"
 });
 

@@ -6,16 +6,17 @@ function addPatient(patID, docID){
 }
 
 setInterval(function(){
+	$(document).ready(function() {
+		table.find("tr:gt(0)").remove();
+	 });
+
 	$.ajax({
 		url: '/patientList',
 		complete: function(data) {
 			var patArray = data.responseJSON;
-
 			for (x in patArray) {
-				addPatient(patArray[x].ordinateID, patArray[x].doctorID);
+				addPatient(patArray[x].ordinateID, (++x)*15);
 			}
-
-			
 		}
 	});
-}, 2000);
+}, 2500);
