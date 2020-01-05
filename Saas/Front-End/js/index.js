@@ -1,17 +1,21 @@
 var table = $("table");
-var newPatientOld = localStorage.getItem('patient');
 
-function addPatient(){	
-	table.append("<tr><td>" + localStorage.getItem('patient') + "</td><td>"
-		+ localStorage.getItem('eta') + "</td></tr>");
+function addPatient(patID, docID){	
+	table.append("<tr><td>" + patID + "</td><td>"
+		+ docID + "</td></tr>");
 }
 
 setInterval(function(){
-	var newPatientNew = localStorage.getItem('patient');
-	// alert(newPatientOld + " vs " + newPatientNew);
-	if (newPatientOld !== newPatientNew){
-		// alert("here");
-		addPatient();
-		newPatientOld = localStorage.getItem('patient');
-	}
-}, 1000);
+	$.ajax({
+		url: '/patientList',
+		complete: function(data) {
+			var patArray = data.responseJSON;
+
+			for (x in patArray) {
+				addPatient(patArray[x].ordinateID, patArray[x].doctorID);
+			}
+
+			
+		}
+	});
+}, 2000);

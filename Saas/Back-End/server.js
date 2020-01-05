@@ -2,6 +2,8 @@ const fs = require("fs");
 const express = require("express");
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
+const ip = require("ip");
+const https = require("https");
 // const patient = require("patient.js");
 
 var frontEnd = "/Users/matthew/Documents/Projects/Ordinate/Saas/Front-End/";
@@ -9,10 +11,12 @@ var frontEnd = "/Users/matthew/Documents/Projects/Ordinate/Saas/Front-End/";
 const listApp = express();
 const adminApp = express();
 
+console.log(ip.address());
+
 var connection = mysql.createConnection({
 	host: "localhost",
 	user: "root",
-	password: "password", //This is not the actual password, change it so that it can connect to sql server but change it back to password when committing
+	password: "", //This is not the actual password, change it so that it can connect to sql server but change it back to password when committing
 	database: "ordinateDB"
 });
 
@@ -41,6 +45,25 @@ listApp.listen(3000, function(){
 		res.sendfile(frontEnd + "js/index.js");
 	});
 
+	listApp.get("/patientList", function(req, res){
+		var queryString = "select ordinateID, doctorID from qlist;";
+		//console.log(queryString);
+
+		connection.query(queryString, function(err, results, fields){
+			if (err) throw err;
+
+			var qlist = [];
+
+			for (x in results){
+				qlist[x] = {
+					ordinateID: results[x].ordinateID,
+					doctorID: results[x].doctorID
+				};
+			};
+
+			res.json(qlist);
+		});
+	});
 
 adminApp.listen(4000, function(){
 	console.log("Server started on port 4000");
