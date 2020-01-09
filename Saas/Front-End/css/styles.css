@@ -41,7 +41,7 @@ tr:nth-child(odd) {
 
 .center {
 	 margin: auto;
-	 width: 50%;
+	 width: auto;
 	 padding: 0px;
 	 position: relative;
 }

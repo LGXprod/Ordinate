@@ -32,7 +32,7 @@ function loadDocLists(){
 					addPatient(docList[x][i].ordinateID, i*15);
 				}
 	
-				await sleep(5000);
+				await sleep(7500);
 	
 				$('#mainTable tr:gt(0)').remove();
 	
@@ -46,4 +46,4 @@ loadDocLists();
 
 setInterval(function(){
 	loadDocLists();
-}, 21000);
+}, 31000);

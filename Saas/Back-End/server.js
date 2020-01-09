@@ -58,11 +58,11 @@ listApp.listen(3000, function(){
 				var qlist = [];
 
 				for (x in docResults) {
-					console.log(docResults[x].doctorID)
+					// console.log(docResults[x].doctorID)
 					qlist[x] = [{id: docResults[x].doctorID, sName: docResults[x].sName}]; // creates an array for each unique doctorID and puts it in qlist
 				}
 
-				console.log("Doctors added: " + qlist);
+				// console.log("Doctors added: " + qlist);
 
 				for (x in results){
 
@@ -79,7 +79,7 @@ listApp.listen(3000, function(){
 		
 				};
 
-				console.log("Patients added: " + qlist);
+				// console.log("Patients added: " + qlist);
 
 				res.json(qlist);
 			});
@@ -126,8 +126,10 @@ adminApp.listen(4000, function(){
 
 		connection.query(validQuery, function(err, result, fields){
 			if (err) throw err;
-			console.log(result[0].ordinateID);
-			if (result[0].ordinateID) {
+
+			console.log(result[0]);
+
+			if (result[0] != null) { 
 				console.log("Valid id");
 
 				var insertQuery = "insert into qlist (ordinateID, doctorID) values (" + id + ", " 
@@ -138,6 +140,9 @@ adminApp.listen(4000, function(){
 					if (err) throw err;
 					console.log("Successful");
 				});
+			} else {
+				// console.log("here");
+				res.send("<script>alert('Ordinate ID " + parseInt(id) + " does not exist.')</script>");
 			}
 		});
 	});
@@ -147,17 +152,41 @@ adminApp.listen(4000, function(){
 		var sName = req.body.sName;
 		var dob = req.body.dob;
 
-		var id = Math.round(Math.random()*1000);	
+		var id; 
 
-		var queryString = "insert into patient (ordinateID, fName, sName, dob)" + " values (" + id	
-		+ ", '" + fName + "', '" + sName + "', '" + dob + "')";
+		function setID(){
+			id = Math.round(Math.random()*100000);
+		}
 
-		console.log(queryString);
+		setID();
 
-		connection.query(queryString, function(err, result){
-			if (err) throw err;
-			console.log("Successful");
-		});
+		function applyID(){
+			var validateQuery = "select ordinateID from patient where ordinateID="+id;
 
-		res.send("<script>alert('New patient: " + fName + " " + sName + " has been assigned Ordinate ID: " + parseInt(id) + ".')</script>"); 
+			connection.query(validateQuery, function(err, results){
+				if (err) throw err;
+	
+				if (results[0] == null){
+					var queryString = "insert into patient (ordinateID, fName, sName, dob)" + " values (" + id	
+					+ ", '" + fName + "', '" + sName + "', '" + dob + "')";
+			
+					console.log(queryString);
+	
+					connection.query(queryString, function(err, result){
+						if (err) throw err;
+						console.log("Successful");
+					});
+	
+					res.send("<script>alert('New patient: " + fName + " " + sName + " has been assigned Ordinate ID: " + parseInt(id) + ".')</script>"); 
+				} else {
+					console.log("Already exists");
+					setID();
+					console.log("New id " + id);
+					applyID();
+				}
+			});
+		}
+		
+		applyID();
+		 
 	});
