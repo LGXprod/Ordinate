@@ -16,7 +16,7 @@ console.log(ip.address());
 var connection = mysql.createConnection({
 	host: "localhost",
 	user: "root",
-	password: "64Guardian07!", //This is not the actual password, change it so that it can connect to sql server but change it back to password when committing
+	password: "", //This is not the actual password, change it so that it can connect to sql server but change it back to password when committing
 	database: "ordinateDB"
 });
 
@@ -52,16 +52,38 @@ listApp.listen(3000, function(){
 		connection.query(queryString, function(err, results, fields){
 			if (err) throw err;
 
-			var qlist = [];
+			connection.query("select doctorID, sName from doctor;", function(err, docResults){
+				if (err) throw err;
 
-			for (x in results){
-				qlist[x] = {
-					ordinateID: results[x].ordinateID,
-					doctorID: results[x].doctorID
+				var qlist = [];
+
+				for (x in docResults) {
+					console.log(docResults[x].doctorID)
+					qlist[x] = [{id: docResults[x].doctorID, sName: docResults[x].sName}]; // creates an array for each unique doctorID and puts it in qlist
+				}
+
+				console.log("Doctors added: " + qlist);
+
+				for (x in results){
+
+					for (y in qlist) {
+
+						if (qlist[y][0].id == results[x].doctorID){ // checks each doc in qlist with the doc the patient wants and then adds the patient to the right doc
+							qlist[y][qlist[y].length] = {
+								ordinateID: results[x].ordinateID,
+								doctorID: results[x].doctorID
+							};
+						}
+
+					}
+		
 				};
-			};
 
-			res.json(qlist);
+				console.log("Patients added: " + qlist);
+
+				res.json(qlist);
+			});
+			
 		});
 	});
 
@@ -125,7 +147,9 @@ adminApp.listen(4000, function(){
 		var sName = req.body.sName;
 		var dob = req.body.dob;
 
-		var queryString = "insert into patient (ordinateID, fName, sName, dob)" + " values (" + Math.round(Math.random()*1000)	
+		var id = Math.round(Math.random()*1000);	
+
+		var queryString = "insert into patient (ordinateID, fName, sName, dob)" + " values (" + id	
 		+ ", '" + fName + "', '" + sName + "', '" + dob + "')";
 
 		console.log(queryString);
@@ -135,6 +159,5 @@ adminApp.listen(4000, function(){
 			console.log("Successful");
 		});
 
-		res.write("<script>alert(' Added: " + fName + " as a new patient')</script>");
-		res.redirect('back');
+		res.send("<script>alert('New patient: " + fName + " " + sName + " has been assigned Ordinate ID: " + parseInt(id) + ".')</script>"); 
 	});

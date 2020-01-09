@@ -1,5 +1,5 @@
 img {
-	width: 75px;
+	width: 150px;
 	height: auto;
 	vertical-align: middle;
 	/*padding: 2.5%;*/
@@ -9,21 +9,21 @@ body {
 	font-family: helvetica;
 	text-align: center;
 	margin: 0px;
-	font-size: 100%;
+	font-size: 225%;
 	background-color: #222831;
 	color: #eeeeee;
 }
 
 table {
 	width: 100%;
-	font-size: 125%;
+	font-size: 150%;
 	margin-left: auto;
 	margin-right: auto;
 }
 
 td {
 	width: 50%;
-	font-size: 125%;
+	font-size: 150%;
 	color: #eeeeee;
 }
 
