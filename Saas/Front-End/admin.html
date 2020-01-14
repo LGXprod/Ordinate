@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Ordinate Admin</title>
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
 	<link rel="stylesheet" type="text/css" href="css/addPatient.css">
 	<link rel="icon" type="text/css" href="images/favicon.ico">
 	<!-- <script type="text/javascript" src=""></script> -->
@@ -10,12 +11,12 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
-<body id="formTheme">
+<body id="background">
 
-	<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
+	<nav class="navbar navbar-expand-custom bg-dark navbar-dark justify-content-center" id="collapsingNavbar">
 
-		<a class="navbar-brand" id="logo">
-			<img src="images/logo2.png" id="logo">
+		<a class="navbar-brand navSpacing" id="logoSmall">
+			<img src="images/logo2.png" id="logoSmall">
 			Ordinate-Admin
 		</a>
 
@@ -23,7 +24,18 @@
 			<li class="navbar-item navSpacing">
 				<a class="nav-link" href="/">Queuing</a>
 			</li>
-			<li class="nav-item dropdown">
+			<!-- <li class="nav-item dropdown navSpacing">
+				<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Queuing
+					<span class="caret"></span></a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="admin.html">Add Patient</a>
+					<a class="dropdown-item" href="removal.html">Remove Patient</a>
+				</div>
+			</li> -->
+			<!-- <li class="navbar-item navSpacing">
+				<a class="nav-link" href="registration.html">Registration</a>
+			</li> -->
+			<li class="nav-item dropdown navSpacing">
 				<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Registration
 					<span class="caret"></span></a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -32,9 +44,6 @@
 					<a class="dropdown-item" href="#">Other</a>
 				</div>
 			</li>
-			<!-- <li class="navbar-item navSpacing">
-				<a class="nav-link" href="registration.html">Registration</a>
-			</li> -->
 			<li class="navbar-item navSpacing">
 				<a class="nav-link">Management</a>
 			</li>
@@ -44,18 +53,49 @@
 		</ul>
 	</nav>
 
-	<form action="/" method="post">
-		<div class="form-group">
-			<label for="inputID">Patient Ordinate-ID:</label>
-			<input type="text" class="form-control" aria-describedly="idHelp" id="inputID" placeholder="Enter ID" name="ID">
-			<small id="idHelp" class="form-text text-muted">Remember enter Ordinate-ID in user profile not another ID (e.g. medicare, record no, name).</small>
-		</div>
-		<div class="form-group">
-			<label for="inputDoctor">Requested Doctor ID:</label>
-			<input id="inputDoctor" class="form-control" type="text" placeholder="Doctor patient asked for" name="doctor">
-		</div>
-		<button type="submit" class="btn btn-dark">Queue Patient</button>
-	</form>
+	<div class="middle">
+
+		<h1>Add Patient</h1>
+		
+		<form action="/" method="post" class="formTheme">
+			<div class="form-group">
+				<label for="inputID">Patient Ordinate-ID:</label>
+				<input type="text" class="form-control" aria-describedly="idHelp" id="inputID" placeholder="Enter ID" name="ID">
+				<small id="idHelp" class="form-text text-muted">Remember enter Ordinate-ID in user profile not another ID (e.g. medicare, record no, name).</small>
+			</div>
+			<div class="form-group">
+				<label for="inputDoctor">Requested Doctor ID:</label>
+				<input id="inputDoctor" class="form-control" type="text" placeholder="Doctor patient asked for" name="doctor">
+			</div>
+			<button type="submit" class="btn btn-dark">Queue Patient</button>
+		</form>
+
+	</div>
+
+	<div class="middle">
+
+		<h1>Remove Patient</h1>
+
+		<form action="docFilter" method="post" class="noBgForm">
+			<div class="form-group">
+				<label for="docFilter" class="rightSpacing">Doctor:</label>
+				<select id="docFilter" name="id">
+				</select>
+				<button type="submit" value="Submit" class="btn btn-light">Submit</button>
+			</div>
+		</form>
+
+		<table id="mainTable">
+
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>ETA</th>
+			</tr>
+		
+		</table>
+
+	</div>
 
 </body>
 

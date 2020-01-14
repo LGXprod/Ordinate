@@ -45,46 +45,61 @@ listApp.listen(3000, function(){
 		res.sendfile(frontEnd + "js/index.js");
 	});
 
-	listApp.get("/patientList", function(req, res){
+	function getDoctorsList(req, res){
 		var queryString = "select ordinateID, doctorID from qlist;";
 		//console.log(queryString);
 
-		connection.query(queryString, function(err, results, fields){
+		connection.query(queryString, function(err, patResults, fields){
 			if (err) throw err;
 
-			connection.query("select doctorID, sName from doctor;", function(err, docResults){
+			connection.query("select doctorID, sName from doctor order by doctorID ASC;", function(err, docResults){
 				if (err) throw err;
 
 				var qlist = [];
 
-				for (x in docResults) {
-					// console.log(docResults[x].doctorID)
-					qlist[x] = [{id: docResults[x].doctorID, sName: docResults[x].sName}]; // creates an array for each unique doctorID and puts it in qlist
+				for (i=1; i<docResults.length; i++) {
+					qlist[i-1] = [{id: docResults[i].doctorID, sName: docResults[i].sName}]; // creates an array for each unique doctorID and puts it in qlist
 				}
 
-				// console.log("Doctors added: " + qlist);
+				for (x in patResults) {
+						
+					if (patResults[x].doctorID == 0) {
 
-				for (x in results){
+						var min = qlist[0];
+						for (i=1; i<qlist.length; i++) if (min.length > qlist[i].length) min=qlist[i];
 
-					for (y in qlist) {
+						min[min.length] = {
+							ordinateID: patResults[x].ordinateID,
+							doctorID: patResults[x].doctorID
+						};
 
-						if (qlist[y][0].id == results[x].doctorID){ // checks each doc in qlist with the doc the patient wants and then adds the patient to the right doc
-							qlist[y][qlist[y].length] = {
-								ordinateID: results[x].ordinateID,
-								doctorID: results[x].doctorID
-							};
+					} else {
+
+						for (y in qlist) {
+	
+							if (qlist[y][0].id == patResults[x].doctorID && patResults[x].doctorID != 0){ // checks each doc in qlist with the doc the patient wants and then adds the patient to the right doc
+								
+								qlist[y][qlist[y].length] = {
+									ordinateID: patResults[x].ordinateID,
+									doctorID: patResults[x].doctorID
+								};
+	
+							}
+	
 						}
 
-					}
+					}	
 		
-				};
-
-				// console.log("Patients added: " + qlist);
+				}
 
 				res.json(qlist);
 			});
 			
 		});
+	}
+
+	listApp.get("/patientList", function(req, res){
+		getDoctorsList(req, res);
 	});
 
 adminApp.listen(4000, function(){
@@ -103,6 +118,10 @@ adminApp.listen(4000, function(){
 		res.sendFile(frontEnd + "admin.html");
 	});
 
+	adminApp.get('/css/styles.css', function(req, res) {
+		res.sendFile(frontEnd + "css/styles.css");
+	  });
+
 	adminApp.get("/images/logo2.png", function(req, res){
 		res.sendFile(frontEnd + "images/logo2.png");
 	});
@@ -111,13 +130,35 @@ adminApp.listen(4000, function(){
 		res.sendfile(frontEnd + "js/admin.js");
 	});
 
+	adminApp.get("/js/index.js", function(req, res){
+		res.sendfile(frontEnd + "js/index.js");
+	});
+
 	adminApp.get("/css/addPatient.css", function(req, res){
 		res.sendFile(frontEnd + "css/addPatient.css");
 	});
 
+	adminApp.get("/availableDocs", function(req, res){
+		connection.query("select doctorID, fName, sName from doctor", function(err, results){
+			if (err) throw err;
+
+			var docList = [];
+
+			for(i in results) {
+				docList[i] = {
+					doctorID: results[i].doctorID,
+					fName: results[i].fName,
+					sName: results[i].sName
+				}
+			}
+
+			res.json(docList);
+		})
+	});
+
 	adminApp.use(bodyParser.urlencoded({extended: true}));
 
-	adminApp.post("/", function(req, res){
+	adminApp.post("/", function(req, res, next){
 		var id = req.body.ID;
 		var doctorID = req.body.doctor;
 
@@ -141,10 +182,30 @@ adminApp.listen(4000, function(){
 					console.log("Successful");
 				});
 			} else {
-				// console.log("here");
 				res.send("<script>alert('Ordinate ID " + parseInt(id) + " does not exist.')</script>");
 			}
 		});
+
+		res.redirect('back');
+	});
+
+	adminApp.post("/docFilter", function(req, res){
+		var specifiedDoc = req.body.id
+		var queryString = "select ordinateID, fName, sName from patient where ordinateID in (select ordinateID from qlist where doctorID=" + specifiedDoc + ")"
+
+		connection.query(queryString, function(err, results){
+			var patList = []
+
+			for (i in results){
+				patList[i] = {
+					ordinateID: results[i].ordinateID,
+					fName: results[i].fName,
+					sName: results[i].sName
+				}
+			}
+
+			res.json(patList)
+		})
 	});
 
 	adminApp.post("/registration.html", function(req, res){
@@ -177,7 +238,8 @@ adminApp.listen(4000, function(){
 						console.log("Successful");
 					});
 	
-					res.send("<script>alert('New patient: " + fName + " " + sName + " has been assigned Ordinate ID: " + parseInt(id) + ".')</script>"); 
+					//res.send("<script>alert('New patient: " + fName + " " + sName + " has been assigned Ordinate ID: " + parseInt(id) + ".')</script>"); 
+					res.redirect('back');
 				} else {
 					console.log("Already exists");
 					setID();
@@ -188,5 +250,4 @@ adminApp.listen(4000, function(){
 		}
 		
 		applyID();
-		 
 	});

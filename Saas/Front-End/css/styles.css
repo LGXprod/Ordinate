@@ -1,11 +1,11 @@
-img {
+#logoLarge {
 	width: 150px;
 	height: auto;
 	vertical-align: middle;
 	/*padding: 2.5%;*/
 }
 
-body {
+.listTheme {
 	font-family: helvetica;
 	text-align: center;
 	margin: 0px;

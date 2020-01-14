@@ -1,5 +1,5 @@
 var table = $("table");
-var docHeading = $("h1");
+var docHeading = $("#docHeader");
 
 function addPatient(patID, eta){	
 	table.append("<tr><td>" + patID + "</td><td>"
@@ -19,6 +19,8 @@ function loadDocLists(){
 			console.log(docList);
 	
 			for (x in docList) {
+				
+				$('#mainTable tr:gt(0)').remove();
 
 				// docHeading.text(docList[x][0].sName);
 				docHeading.fadeOut(function(){
@@ -34,8 +36,6 @@ function loadDocLists(){
 	
 				await sleep(7500);
 	
-				$('#mainTable tr:gt(0)').remove();
-	
 			}
 	
 		}
@@ -44,6 +44,6 @@ function loadDocLists(){
 
 loadDocLists();
 
-setInterval(function(){
+setInterval(async function(){
 	loadDocLists();
-}, 31000);
+}, 30005);

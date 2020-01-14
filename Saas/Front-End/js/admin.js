@@ -1,34 +1,59 @@
-// class Patient {
-// 	constructor(ordinateID, doctorRequested){
-// 		this.ordinateID = ordinateID;
-// 		this.doctorRequested = doctorRequested;
-// 		this.timeArrived = new Date();
-// 	}
+var table = $("table");
+var docFilter = $("#docFilter");
 
-// 	getID(){
-// 		return this.ordinateID;
-// 	}
+function addPatient(patID, eta){	
+	table.append("<tr><td>" + patID + "</td><td>"
+		+ eta + "</td></tr>");
+}
 
-// 	getDoctor(){
-// 		return this.doctorRequested;
-// 	}
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-// 	getTimeArrived(){
-// 		return this.timeArrived;
-// 	}
-// }
+$.ajax({
+    url: '/availableDocs',
+    complete: function(data) {
 
-// var submitButton = document.querySelector("Button");
+        var doctors = data.responseJSON;
+        docFilter.append('<option value=0>Any doctor</option>');
 
-// submitButton.addEventListener("click", function() {
+        for (i = 1; i < doctors.length; i++) {
+            docFilter.append('<option value=' + doctors[i].doctorID + '>' + doctors[i].fName + ' ' + doctors[i].sName + '</option>');
+        }
 
-// 	newPatient = new Patient(document.getElementById("inputID").value, 
-// 		document.getElementById("inputDoctor").value);
+    }
+})
 
-// 	alert(newPatient.getID() + " is being added to Doctor " + newPatient.getDoctor());
-// 	localStorage.setItem("patient", newPatient.getID());
+function loadDocLists(){
+	$.ajax({
+		url: '/doctorList',
+		complete: async function(data) {
+	
+			var docList = data.responseJSON;
+			console.log(docList);
+	
+			for (x in docList) {
+				
+				$('#mainTable tr:gt(0)').remove();
 
-// 	var time = newPatient.getTimeArrived();
-// 	alert(time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds());
-// 	localStorage.setItem("eta", time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds());
-// });
+				// docHeading.text(docList[x][0].sName);
+				docHeading.fadeOut(function(){
+					docHeading.text("Doctor " + docList[x][0].sName).fadeIn();
+				});
+				console.log(docList[x][0].sName);
+				console.log(docList[x].length);
+	
+				for (i = 1; i < docList[x].length; i++){
+					console.log(docList[x][i].ordinateID);
+					addPatient(docList[x][i].ordinateID, i*15);
+				}
+	
+				await sleep(7500);
+	
+			}
+	
+		}
+	});
+}
+
+loadDocLists();
