@@ -10,6 +10,9 @@ function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+var sleepTime = 7500;
+var noDoctors = 4;
+
 function loadDocLists(){
 	$.ajax({
 		url: '/patientList',
@@ -34,7 +37,7 @@ function loadDocLists(){
 					addPatient(docList[x][i].ordinateID, i*15);
 				}
 	
-				await sleep(7500);
+				await sleep(sleepTime);
 	
 			}
 	
@@ -46,4 +49,4 @@ loadDocLists();
 
 setInterval(async function(){
 	loadDocLists();
-}, 30005);
+}, (sleepTime*noDoctors)+5); 

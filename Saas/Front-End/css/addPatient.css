@@ -12,8 +12,39 @@
 	border-radius: 7.5px;
 }
 
-h1 {
-	color: #fff;
+.infoPanel {
+	width: 350px;
+	margin: 0 auto;
+	margin-top: 2.5vh;
+	padding: 15px;
+	position: relative;
+	background-color: #00adb5;
+    border-radius: 7.5px;
+    text-align: center;
+}
+
+.smallButton {
+    width: 80px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 2px solid #222831;
+}
+
+h1, h2 {
+    color: #fff;
+}
+
+h3, p {
+    color: #393e46;
+}
+
+td {
+    width: 33%;
 }
 
 .noBgForm {
@@ -31,12 +62,21 @@ h1 {
 	text-align: center;
 }
 
+.left {
+    float: left;
+    text-align: left;
+}
+
 .leftSpacing {
 	padding-left: 10px;
 }
 
 .rightSpacing {
-	padding-right: 10px;
+	margin-right: 10px;
+}
+
+.bottomSpacing {
+    margin-bottom: 10px;
 }
 
 #logoSmall {

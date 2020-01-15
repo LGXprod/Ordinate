@@ -110,7 +110,7 @@ adminApp.listen(4000, function(){
 		res.sendFile(frontEnd + "admin.html");
 	});
 
-	adminApp.get("/registration.html", function(req, res){
+	adminApp.get("/registration", function(req, res){
 		res.sendFile(frontEnd + "registration.html");
 	});
 
@@ -189,32 +189,7 @@ adminApp.listen(4000, function(){
 		res.redirect('back');
 	});
 
-	adminApp.post("/docFilter", function(req, res){
-		var specifiedDoc = req.body.id
-		var queryString = "select ordinateID, fName, sName from patient where ordinateID in (select ordinateID from qlist where doctorID=" + specifiedDoc + ")"
-
-		function response(patList){
-			res.write(JSON.stringify(patList))
-			res.sendFile(frontEnd + "registration.html")
-		}
-
-		connection.query(queryString, function(err, results){
-			var patList = []
-
-			for (i in results){
-				patList[i] = {
-					ordinateID: results[i].ordinateID,
-					fName: results[i].fName,
-					sName: results[i].sName
-				}
-			}
-
-			//response(patList)
-			res.json(patList)
-		})
-	});
-
-	adminApp.post("/registration.html", function(req, res){
+	adminApp.post("/registration", function(req, res){
 		var fName = req.body.fName;
 		var sName = req.body.sName;
 		var dob = req.body.dob;
@@ -229,23 +204,44 @@ adminApp.listen(4000, function(){
 
 		function applyID(){
 			var validateQuery = "select ordinateID from patient where ordinateID="+id;
+			var recepID = 1;
 
 			connection.query(validateQuery, function(err, results){
 				if (err) throw err;
 	
 				if (results[0] == null){
-					var queryString = "insert into patient (ordinateID, fName, sName, dob)" + " values (" + id	
+					var insertPatient = "insert into patient (ordinateID, fName, sName, dob)" + " values (" + id	
 					+ ", '" + fName + "', '" + sName + "', '" + dob + "')";
 			
-					console.log(queryString);
+					console.log(insertPatient);
 	
-					connection.query(queryString, function(err, result){
+					connection.query(insertPatient, function(err){
 						if (err) throw err;
-						console.log("Successful");
+						console.log("Successful 1");
 					});
-	
+
+					connection.query("select recepID from recentNewPatient where recepID="+recepID, function(err, result){
+						if (err) throw err
+
+						//console.log(result)
+						var insertNewPatient;
+						if (result.length == 0){
+							insertNewPatient = "insert into recentNewPatient (recepID, fName, sName, dob, ordinateID) values (" + recepID + ", '" + fName + "', '" + sName + "', '" + dob + "', " 
+							 + id + ")"
+						} else {
+							insertNewPatient = "update recentNewPatient set fName ='" + fName + "', sName='" + sName + "', dob='" + dob + "', ordinateID=" + id + " where recepID=" + recepID
+						}
+
+						console.log(insertNewPatient)
+
+						connection.query(insertNewPatient, function(err){
+							if (err) throw err
+							console.log("Successful 2")
+						})
+					})	
+
 					//res.send("<script>alert('New patient: " + fName + " " + sName + " has been assigned Ordinate ID: " + parseInt(id) + ".')</script>"); 
-					res.redirect('back');
+					res.redirect("/newPatient")
 				} else {
 					console.log("Already exists");
 					setID();
@@ -257,3 +253,34 @@ adminApp.listen(4000, function(){
 		
 		applyID();
 	});
+
+	adminApp.get("/patientList", function(req, res){
+		getDoctorsList(req, res)
+	})
+
+	adminApp.get("/newPatient", function(req, res){
+		res.sendFile(frontEnd + "newPatient.html")
+	})
+
+		adminApp.get("/submission", function(req, res){
+			var recepID = 1
+
+			connection.query("select fName, sName, dob, ordinateID from recentNewPatient where recepID=" + recepID, function(err, result){
+				var patient = {
+					fName: result[0].fName,
+					sName: result[0].sName,
+					dob: result[0].dob,
+					ordinateID: result[0].ordinateID
+				}
+
+				res.json(patient)
+			})
+		})
+
+	adminApp.get("/js/newPatient.js", function(req, res){
+		res.sendFile(frontEnd + "js/newPatient.js")
+	})
+
+	adminApp.get("/delete", function(req, res){
+		res.send("<script>window.location.replace('/registration');</script>")
+	})

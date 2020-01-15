@@ -49,3 +49,18 @@ create table qlist(
     constraint qlistFK1 foreign key (ordinateID) references patient(ordinateID),
     constraint qlistFK2 foreign key (doctorID) references doctor(doctorID)
 );
+
+create table receptionist(
+	recepID Integer NOT NULL,
+    fName varchar(30),
+    sName varchar(30),
+    constraint receptionistPK primary key (recepID)
+);
+
+create table recentNewPatient(
+	recepID Integer NOT NULL,
+	fName varchar(30),
+    sName varchar(30),
+    dob date,
+    constraint receptionistFK foreign key (recepID) references receptionist(recepID)
+);

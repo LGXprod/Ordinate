@@ -39,7 +39,7 @@
 				<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Registration
 					<span class="caret"></span></a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" href="registration.html">Patient</a>
+					<a class="dropdown-item" href="registration">Patient</a>
 					<a class="dropdown-item" href="#">Doctor</a>
 					<a class="dropdown-item" href="#">Other</a>
 				</div>
@@ -76,16 +76,13 @@
 
 		<h1>Remove Patient</h1>
 
-		<form action="docFilter" method="post" class="noBgForm">
-			<div class="form-group">
-				<label for="docFilter" class="rightSpacing">Doctor:</label>
-				<select id="docFilter" name="id">
-				</select>
-				<button type="submit" value="Submit" class="btn btn-light">Submit</button>
-			</div>
-		</form>
+		<div class="form-group noBgForm">
+			<label class="rightSpacing">Doctor:</label>
+			<select id="docSelector" onchange="filter()">
+			</select>
+		</div>
 
-		<table id="mainTable">
+		<table>
 
 			<tr>
 				<th>ID</th>

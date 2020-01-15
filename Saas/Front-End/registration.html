@@ -4,16 +4,15 @@
 	<title>Registration</title>
 	<link rel="stylesheet" type="text/css" href="css/addPatient.css">
 	<link rel="icon" type="text/css" href="images/favicon.ico">
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+	<!-- <script type="text/javascript" src=""></script> -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<body id="formTheme">
+</head>
+<body id="background">
 
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
 
-		<a class="navbar-brand" id="logo">
-			<img src="images/logo2.png" id="logo">
+		<a class="navbar-brand">
+			<img src="images/logo2.png" id="logoSmall">
 			Ordinate-Admin
 		</a>
 
@@ -21,18 +20,9 @@
 			<li class="navbar-item navSpacing">
 				<a class="nav-link" href="/">Queuing</a>
 			</li>
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Registration
-					<span class="caret"></span></a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" href="registration.html">Patient</a>
-					<a class="dropdown-item" href="#">Doctor</a>
-					<a class="dropdown-item" href="#">Other</a>
-				</div>
+			<li class="navbar-item navSpacing">
+				<a class="nav-link" href="registration">Registration</a>
 			</li>
-			<!-- <li class="navbar-item navSpacing">
-				<a class="nav-link" href="registration.html">Registration</a>
-			</li> -->
 			<li class="navbar-item navSpacing">
 				<a class="nav-link">Management</a>
 			</li>
@@ -42,7 +32,7 @@
 		</ul>
 	</nav>
 
-	<form action="/registration.html" method="post">
+	<form action="/registration" method="post" class="formTheme">
 
 		<div class="form-group">
 			<label for="inputFName">First Name:</label>
@@ -56,6 +46,7 @@
 			name="sName">
 		</div>
 
+		<!-- Change this to a drop down menu -->
 		<div class="form-group"> 
 			<label for="inputDOB">Date of Birth:</label>
 			<!-- Will change this to a date picker at a later time -->
@@ -68,6 +59,4 @@
 	</form>
 
 </body>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </html>
