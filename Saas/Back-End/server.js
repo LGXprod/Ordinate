@@ -193,6 +193,11 @@ adminApp.listen(4000, function(){
 		var specifiedDoc = req.body.id
 		var queryString = "select ordinateID, fName, sName from patient where ordinateID in (select ordinateID from qlist where doctorID=" + specifiedDoc + ")"
 
+		function response(patList){
+			res.write(JSON.stringify(patList))
+			res.sendFile(frontEnd + "registration.html")
+		}
+
 		connection.query(queryString, function(err, results){
 			var patList = []
 
@@ -204,6 +209,7 @@ adminApp.listen(4000, function(){
 				}
 			}
 
+			//response(patList)
 			res.json(patList)
 		})
 	});
