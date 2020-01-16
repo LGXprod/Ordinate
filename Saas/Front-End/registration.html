@@ -9,9 +9,9 @@
 </head>
 <body id="background">
 
-	<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
+	<nav class="navbar navbar-expand-custom bg-dark navbar-dark justify-content-center" id="collapsingNavbar">
 
-		<a class="navbar-brand">
+		<a class="navbar-brand navSpacing" id="logoSmall">
 			<img src="images/logo2.png" id="logoSmall">
 			Ordinate-Admin
 		</a>
@@ -20,8 +20,25 @@
 			<li class="navbar-item navSpacing">
 				<a class="nav-link" href="/">Queuing</a>
 			</li>
-			<li class="navbar-item navSpacing">
-				<a class="nav-link" href="registration">Registration</a>
+			<!-- <li class="nav-item dropdown navSpacing">
+				<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Queuing
+					<span class="caret"></span></a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="admin.html">Add Patient</a>
+					<a class="dropdown-item" href="removal.html">Remove Patient</a>
+				</div>
+			</li> -->
+			<!-- <li class="navbar-item navSpacing">
+				<a class="nav-link" href="registration.html">Registration</a>
+			</li> -->
+			<li class="nav-item dropdown navSpacing">
+				<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Registration
+					<span class="caret"></span></a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="registration">Patient</a>
+					<a class="dropdown-item" href="#">Doctor</a>
+					<a class="dropdown-item" href="#">Other</a>
+				</div>
 			</li>
 			<li class="navbar-item navSpacing">
 				<a class="nav-link">Management</a>

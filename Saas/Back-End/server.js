@@ -46,7 +46,7 @@ listApp.listen(3000, function(){
 	});
 
 	function getDoctorsList(req, res){
-		var queryString = "select ordinateID, doctorID from qlist;";
+		var queryString = "select qlist.ordinateID, qlist.doctorID, patient.fName, patient.sName from qlist inner join patient where patient.ordinateID=qlist.ordinateID;";
 		//console.log(queryString);
 
 		connection.query(queryString, function(err, patResults, fields){
@@ -70,7 +70,9 @@ listApp.listen(3000, function(){
 
 						min[min.length] = {
 							ordinateID: patResults[x].ordinateID,
-							doctorID: patResults[x].doctorID
+							doctorID: patResults[x].doctorID,
+							fName: patResults[x].fName,
+							sName: patResults[x].sName
 						};
 
 					} else {
@@ -81,7 +83,9 @@ listApp.listen(3000, function(){
 								
 								qlist[y][qlist[y].length] = {
 									ordinateID: patResults[x].ordinateID,
-									doctorID: patResults[x].doctorID
+									doctorID: patResults[x].doctorID,
+									fName: patResults[x].fName,
+									sName: patResults[x].sName
 								};
 	
 							}
