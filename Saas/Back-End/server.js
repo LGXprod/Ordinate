@@ -3,8 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const ip = require("ip");
-const https = require("https");
-// const patient = require("patient.js");
+const faker = require("faker");
 
 var frontEnd = "/Users/matthew/Documents/Projects/Ordinate/Saas/Front-End/";
 
@@ -193,69 +192,85 @@ adminApp.listen(4000, function(){
 		res.redirect('back');
 	});
 
+	function addPatientToDB(fName, sName, dob, id, res, redirect, setID){
+		var validateQuery = "select ordinateID from patient where ordinateID="+id;
+		var recepID = 1;
+
+		connection.query(validateQuery, function(err, results){
+			if (err) throw err;
+
+			if (results[0] == null){
+				var insertPatient = "insert into patient (ordinateID, fName, sName, dob)" + " values (" + id	
+				+ ", '" + fName + "', '" + sName + "', '" + dob + "')";
+		
+				console.log(insertPatient);
+
+				connection.query(insertPatient, function(err){
+					if (err) throw err;
+					console.log("Successful 1");
+				});
+
+				connection.query("select recepID from recentNewPatient where recepID="+recepID, function(err, result){
+					if (err) throw err
+
+					//console.log(result)
+					var insertNewPatient;
+					if (result.length == 0){
+						insertNewPatient = "insert into recentNewPatient (recepID, fName, sName, dob, ordinateID) values (" + recepID + ", '" + fName + "', '" + sName + "', '" + dob + "', " 
+						 + id + ")"
+					} else {
+						insertNewPatient = "update recentNewPatient set fName ='" + fName + "', sName='" + sName + "', dob='" + dob + "', ordinateID=" + id + " where recepID=" + recepID
+					}
+
+					console.log(insertNewPatient)
+
+					connection.query(insertNewPatient, function(err){
+						if (err) throw err
+						console.log("Successful 2")
+					})
+				})	
+
+				//res.send("<script>alert('New patient: " + fName + " " + sName + " has been assigned Ordinate ID: " + parseInt(id) + ".')</script>"); 
+				
+				if (redirect){
+					res.redirect("/newPatient")
+				}
+			} else {
+				console.log("Already exists");
+				setID();
+				console.log("New id " + id);
+				applyID();
+			}
+		});
+	}
+
+	function addManyPatientsToDBTest(noPatients){
+		for (i = 1; i <= noPatients; i++){
+			// dob 10/10/2010 will be the identifier for the faker.js generated instances
+			var id 
+			function setID(){
+				id = Math.round(Math.random()*100000);
+			}
+			setID()
+			addPatientToDB(faker.name.firstName(), faker.name.lastName(), "2010-10-10", id, null, false, setID)
+		}
+	}
+
+	//addManyPatientsToDBTest(10)
+
 	adminApp.post("/registration", function(req, res){
 		var fName = req.body.fName;
 		var sName = req.body.sName;
 		var dob = req.body.dob;
 
 		var id; 
-
 		function setID(){
 			id = Math.round(Math.random()*100000);
 		}
 
 		setID();
-
-		function applyID(){
-			var validateQuery = "select ordinateID from patient where ordinateID="+id;
-			var recepID = 1;
-
-			connection.query(validateQuery, function(err, results){
-				if (err) throw err;
-	
-				if (results[0] == null){
-					var insertPatient = "insert into patient (ordinateID, fName, sName, dob)" + " values (" + id	
-					+ ", '" + fName + "', '" + sName + "', '" + dob + "')";
-			
-					console.log(insertPatient);
-	
-					connection.query(insertPatient, function(err){
-						if (err) throw err;
-						console.log("Successful 1");
-					});
-
-					connection.query("select recepID from recentNewPatient where recepID="+recepID, function(err, result){
-						if (err) throw err
-
-						//console.log(result)
-						var insertNewPatient;
-						if (result.length == 0){
-							insertNewPatient = "insert into recentNewPatient (recepID, fName, sName, dob, ordinateID) values (" + recepID + ", '" + fName + "', '" + sName + "', '" + dob + "', " 
-							 + id + ")"
-						} else {
-							insertNewPatient = "update recentNewPatient set fName ='" + fName + "', sName='" + sName + "', dob='" + dob + "', ordinateID=" + id + " where recepID=" + recepID
-						}
-
-						console.log(insertNewPatient)
-
-						connection.query(insertNewPatient, function(err){
-							if (err) throw err
-							console.log("Successful 2")
-						})
-					})	
-
-					//res.send("<script>alert('New patient: " + fName + " " + sName + " has been assigned Ordinate ID: " + parseInt(id) + ".')</script>"); 
-					res.redirect("/newPatient")
-				} else {
-					console.log("Already exists");
-					setID();
-					console.log("New id " + id);
-					applyID();
-				}
-			});
-		}
 		
-		applyID();
+		addPatientToDB(fName, sName, dob, id, res, true, setID);
 	});
 
 	adminApp.get("/patientList", function(req, res){
