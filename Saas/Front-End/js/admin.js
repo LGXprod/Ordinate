@@ -1,9 +1,31 @@
 var table = $("table");
 var docFilter = $("#docSelector");
 
+// May need to replace the onlick method in tr with observer pattern once I learn it
+
 function addPatient(patID, name, eta){	
-	table.append("<tr><td>" + patID + "</td><td id='fullName'>"
+	table.append("<tr id='" + patID + "' onclick='rowSelected(this)'><td>" + patID + "</td><td id='fullName'>"
 		+ name + "</td><td>" + eta + "</td></tr>");
+}
+
+function rowSelected(element){
+	console.log(element.id);
+
+	$("#" + element.id).css("background-color", "red");
+
+	$(window).keydown(function(evt){
+		if (evt.which == 8){
+			console.log("Delete");
+			var row = $("#" + element.id);
+			row.remove();
+
+			$.ajax({
+				url: "/removedPatients",
+				type: "POST",
+				data: { id: element.id }
+			})
+		}
+	});
 }
 
 function sleep(ms) {
@@ -28,6 +50,8 @@ $.ajax({
 	url: "/patientList",
 	complete: function(data){
 		var patList = data.responseJSON;
+
+		$('#smallTable tr:gt(0)').remove();
 
 		for (i in patList){
 			for (x = 1; x < patList[i].length; x++){

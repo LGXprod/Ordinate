@@ -1,9 +1,16 @@
 var table = $("table");
 var docHeading = $("#docHeader");
 
-function addPatient(patID, eta){	
-	table.append("<tr><td>" + patID + "</td><td>"
+function addPatient(patID, eta, i){	
+	table.append("<tr id='row" + i + "'><td>" + patID + "</td><td>"
 		+ eta + "</td></tr>");
+	
+	var topPosition = $("#row" + i).position().top;
+	var height = $("#row" + i).height();
+
+	var nextRowBottom = topPosition + (height*3);
+	
+	return nextRowBottom;
 }
 
 function sleep(ms) {
@@ -19,7 +26,7 @@ function loadDocLists(){
 		complete: async function(data) {
 	
 			var docList = data.responseJSON;
-			console.log(docList);
+			//console.log(docList);
 	
 			for (x in docList) {
 				
@@ -29,15 +36,42 @@ function loadDocLists(){
 				docHeading.fadeOut(function(){
 					docHeading.text("Doctor " + docList[x][0].sName).fadeIn();
 				});
-				console.log(docList[x][0].sName);
-				console.log(docList[x].length);
-	
-				for (i = 1; i < docList[x].length; i++){
-					console.log(docList[x][i].ordinateID);
-					addPatient(docList[x][i].ordinateID, i*15);
+				// console.log(docList[x][0].sName);
+				// console.log(docList[x].length);
+
+				for (i = position; i < docList[x].length; i++){
+					//console.log(docList[x][i].ordinateID);
+					var nextRowBottom = addPatient(docList[x][i].ordinateID, i*15, i);
+					var viewableHeight = $(window).height();
+					console.log("Row bottom: " + nextRowBottom + " Viewable height: " + viewableHeight);
+
+					if (nextRowBottom >= viewableHeight){
+						console.log("Passed bottom");
+						// await sleep(sleepTime/2);
+						// $('#mainTable tr:gt(0)').remove();
+						// addFromDocList(i);
+					} 
 				}
 	
-				await sleep(sleepTime);
+				async function addFromDocList(position){
+					for (i = position; i < docList[x].length; i++){
+						//console.log(docList[x][i].ordinateID);
+						var nextRowBottom = addPatient(docList[x][i].ordinateID, i*15, i);
+						var viewableHeight = $(window).height();
+						console.log("Row bottom: " + nextRowBottom + " Viewable height: " + viewableHeight);
+	
+						if (nextRowBottom >= viewableHeight){
+							console.log("Passed bottom");
+							await sleep(sleepTime/2);
+							$('#mainTable tr:gt(0)').remove();
+							addFromDocList(i);
+						} 
+					}
+				}
+
+				//addFromDocList(1);
+	
+				await sleep(sleepTime/2);
 	
 			}
 	

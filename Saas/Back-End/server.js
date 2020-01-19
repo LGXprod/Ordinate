@@ -44,6 +44,28 @@ listApp.listen(3000, function(){
 		res.sendfile(frontEnd + "js/index.js");
 	});
 
+	function qlistTest(){
+		var testDataQuery = "select ordinateID from patient where dob='2010-10-10'"
+		connection.query(testDataQuery, function(err, testData){
+			if (err) throw err
+			var x = -1
+
+			for (i = 0; i < testData.length; i++){
+				x++
+				var insertQuery = "insert into qlist (ordinateID, doctorID) values (" + testData[i].ordinateID + ", " + x + ")"
+				
+				connection.query(insertQuery, function(err){
+					if (err) throw err
+					console.log("Test data in qlist")
+				})
+
+				if (x == 4) x = -1
+			}
+		})
+	}
+
+	//qlistTest()
+
 	function getDoctorsList(req, res){
 		var queryString = "select qlist.ordinateID, qlist.doctorID, patient.fName, patient.sName from qlist inner join patient where patient.ordinateID=qlist.ordinateID;";
 		//console.log(queryString);
@@ -244,19 +266,7 @@ adminApp.listen(4000, function(){
 		});
 	}
 
-	function addManyPatientsToDBTest(noPatients){
-		for (i = 1; i <= noPatients; i++){
-			// dob 10/10/2010 will be the identifier for the faker.js generated instances
-			var id 
-			function setID(){
-				id = Math.round(Math.random()*100000);
-			}
-			setID()
-			addPatientToDB(faker.name.firstName(), faker.name.lastName(), "2010-10-10", id, null, false, setID)
-		}
-	}
-
-	//addManyPatientsToDBTest(10)
+	
 
 	adminApp.post("/registration", function(req, res){
 		var fName = req.body.fName;
@@ -273,9 +283,39 @@ adminApp.listen(4000, function(){
 		addPatientToDB(fName, sName, dob, id, res, true, setID);
 	});
 
+		function addManyPatientsToDBTest(noPatients){
+			for (i = 1; i <= noPatients; i++){
+				// dob 10/10/2010 will be the identifier for the faker.js generated instances
+				var id 
+				function setID(){
+					id = Math.round(Math.random()*100000);
+				}
+				setID()
+				addPatientToDB(faker.name.firstName(), faker.name.lastName(), "2010-10-10", id, null, false, setID)
+			}
+		}
+
+		//addManyPatientsToDBTest(10)
+
 	adminApp.get("/patientList", function(req, res){
 		getDoctorsList(req, res)
 	})
+
+			adminApp.post("/removedPatients", function(req, res){
+				var id = req.body.id
+				var validateQuery = "select ordinateID from qlist where ordinateID=" + id
+
+				connection.query(validateQuery, function(err, result){
+					if (err) throw err
+
+					if (result.length >= 1){
+						var deleteQuery = "delete from qlist where ordinateID=" + id
+						connection.query(deleteQuery, function(err){
+							if (err) throw err
+						})
+					}
+				})	
+			})
 
 	adminApp.get("/newPatient", function(req, res){
 		res.sendFile(frontEnd + "newPatient.html")
