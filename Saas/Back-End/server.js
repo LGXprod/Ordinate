@@ -37,7 +37,7 @@ listApp.listen(3000, function(){
 	});
 
 	listApp.get("/images/logo.png", function(req, res){
-		res.sendFile(frontEnd + "/images/logo.png");
+		res.sendFile(frontEnd + "/images/final/logo9.png");
 	});
 
 	listApp.get("/js/index.js", function(req, res){
@@ -148,7 +148,7 @@ adminApp.listen(4000, function(){
 	  });
 
 	adminApp.get("/images/logo2.png", function(req, res){
-		res.sendFile(frontEnd + "images/logo2.png");
+		res.sendFile(frontEnd + "images/final/logo9.png");
 	});
 
 	adminApp.get("/js/admin.js", function(req, res){

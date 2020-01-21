@@ -1,6 +1,7 @@
 #logoLarge {
-	width: 150px;
+	width: 120px;
 	height: auto;
+	margin-bottom: 2.5vh;
 	vertical-align: middle;
 	/*padding: 2.5%;*/
 }
@@ -42,6 +43,7 @@ tr:nth-child(odd) {
 .center {
 	 margin: auto;
 	 width: auto;
+	 text-align: center;
 	 padding: 0px;
 	 position: relative;
 }
