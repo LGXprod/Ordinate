@@ -8,7 +8,7 @@ function addPatient(patID, eta, i){
 	var topPosition = $("#row" + i).position().top;
 	var height = $("#row" + i).height();
 
-	var nextRowBottom = topPosition + (height*3);
+	var nextRowBottom = topPosition + (height*4);
 	
 	return nextRowBottom;
 }
@@ -17,7 +17,7 @@ function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-var sleepTime = 7500;
+var sleepTime = 10000;
 var noDoctors = 4;
 
 function loadDocLists(){

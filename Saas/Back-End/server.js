@@ -37,7 +37,7 @@ listApp.listen(3000, function(){
 	});
 
 	listApp.get("/images/logo.png", function(req, res){
-		res.sendFile(frontEnd + "/images/final/logo9.png");
+		res.sendFile(frontEnd + "/images/final/Corner-Logo4.png");
 	});
 
 	listApp.get("/js/index.js", function(req, res){
@@ -147,9 +147,9 @@ adminApp.listen(4000, function(){
 		res.sendFile(frontEnd + "css/styles.css");
 	  });
 
-	adminApp.get("/images/logo2.png", function(req, res){
-		res.sendFile(frontEnd + "images/final/logo9.png");
-	});
+	adminApp.get("/Q-Admin.png", function(req, res){
+		res.sendFile(frontEnd + "images/Final/Admin-Logo.png")
+	})
 
 	adminApp.get("/js/admin.js", function(req, res){
 		res.sendfile(frontEnd + "js/admin.js");
