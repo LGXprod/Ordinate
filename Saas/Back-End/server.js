@@ -1,4 +1,4 @@
-const fs = require("fs");
+require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
@@ -15,7 +15,7 @@ console.log(ip.address());
 var connection = mysql.createConnection({
 	host: "localhost",
 	user: "root",
-	password: "", //This is not the actual password, change it so that it can connect to sql server but change it back to password when committing
+	password: process.env.DB_PASSWORD, //This is not the actual password, change it so that it can connect to sql server but change it back to password when committing
 	database: "ordinateDB"
 });
 

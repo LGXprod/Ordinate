@@ -1,30 +1,38 @@
 #logoLarge {
 	width: auto;
-	height: 100px;
+	height: 12.5vh;
 	/* margin-top: -45px; */
 	vertical-align: middle;
-	position: absolute;
+	/* position: absolute;
 	top: 0px;
-	left: 0px;
+	left: 0px; */
 }
 
-/* #docHeader {
-	position: absolute;
-	left: 25vw;
-} */
+#docHeader {
+	display: inline-block;
+	font-size: 6vw;
+}
 
 .listTheme {
 	font-family: helvetica;
 	text-align: center;
 	margin: 0px;
-	font-size: 225%;
 	background-color: #222831;
 	color: #eeeeee;
 }
 
 #mainTable {
-	width: 50%;
 	display: block;
+	font-size: 3vh;
+}
+
+#advert {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border: 4px solid #00adb5;
 }
 
 td {
@@ -41,15 +49,42 @@ tr:nth-child(odd) {
     background-color: #00adb5;
 }
 
+.left-section {
+	display: inline-block;
+	position: relative;
+	width: 60vw;
+	height: 100vh;
+	left: -8px;
+	vertical-align: top;
+}
+
+.right-section {
+	display: inline-block;
+	position: relative;
+	width: 38.5vw;
+	height: 99vh;
+	font-size: 2vw;
+}
+
+.top-left-corner {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
 .center {
+	text-align: center;
+}
+
+/* .center {
 	 margin: auto;
 	 width: auto;
 	 text-align: center;
 	 padding: 0px;
 	 position: relative;
-}
+} */
 
-.right {
+/* .right {
 	float: right;
 	height: 100%;
 	padding: 0px;
@@ -69,6 +104,6 @@ tr:nth-child(odd) {
 	  top: 50%;
 	  -ms-transform: translateY(-50%);
 	  transform: translateY(-50%);
-}
+} */
 
 /*bruh*/

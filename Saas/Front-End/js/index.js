@@ -8,7 +8,7 @@ function addPatient(patID, eta, i){
 	var topPosition = $("#row" + i).position().top;
 	var height = $("#row" + i).height();
 
-	var nextRowBottom = topPosition + (height*4);
+	var nextRowBottom = topPosition + (height*2);
 	
 	return nextRowBottom;
 }
