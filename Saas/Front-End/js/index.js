@@ -39,37 +39,37 @@ function loadDocLists(){
 				// console.log(docList[x][0].sName);
 				// console.log(docList[x].length);
 
-				// for (i = 1; i < docList[x].length; i++){
-				// 	//console.log(docList[x][i].ordinateID);
-				// 	var nextRowBottom = addPatient(docList[x][i].ordinateID, i*15, i);
-				// 	var viewableHeight = $(window).height();
-				// 	console.log("Row bottom: " + nextRowBottom + " Viewable height: " + viewableHeight);
+				for (i = 1; i < docList[x].length; i++){
+					//console.log(docList[x][i].ordinateID);
+					var nextRowBottom = addPatient(docList[x][i].ordinateID, i*15, i);
+					var viewableHeight = $(window).height();
+					console.log("Row bottom: " + nextRowBottom + " Viewable height: " + viewableHeight);
 
-				// 	if (nextRowBottom >= viewableHeight){
-				// 		console.log("Passed bottom");
-				// 		// await sleep(sleepTime/2);
-				// 		// $('#mainTable tr:gt(0)').remove();
-				// 		// addFromDocList(i);
-				// 	} 
-				// }
-	
-				async function addFromDocList(position){
-					for (i = position; i < docList[x].length; i++){
-						//console.log(docList[x][i].ordinateID);
-						var nextRowBottom = addPatient(docList[x][i].ordinateID, i*15, i);
-						var viewableHeight = $(window).height();
-						console.log("Row bottom: " + nextRowBottom + " Viewable height: " + viewableHeight);
-	
-						if (nextRowBottom >= viewableHeight){
-							console.log("Passed bottom");
-							await sleep(sleepTime/2);
-							$('#mainTable tr:gt(0)').remove();
-							addFromDocList(i);
-						} 
-					}
+					if (nextRowBottom >= viewableHeight){
+						console.log("Passed bottom");
+						// await sleep(sleepTime/2);
+						// $('#mainTable tr:gt(0)').remove();
+						// addFromDocList(i);
+					} 
 				}
+	
+				// async function addFromDocList(position){
+				// 	for (i = position; i < docList[x].length; i++){
+				// 		//console.log(docList[x][i].ordinateID);
+				// 		var nextRowBottom = addPatient(docList[x][i].ordinateID, i*15, i);
+				// 		var viewableHeight = $(window).height();
+				// 		console.log("Row bottom: " + nextRowBottom + " Viewable height: " + viewableHeight);
+	
+				// 		// if (nextRowBottom >= viewableHeight){
+				// 		// 	console.log("Passed bottom");
+				// 		// 	await sleep(sleepTime/2);
+				// 		// 	$('#mainTable tr:gt(0)').remove();
+				// 		// 	addFromDocList(i);
+				// 		// } 
+				// 	}
+				// }
 
-				addFromDocList(1);
+				//addFromDocList(1);
 	
 				await sleep(sleepTime);
 	

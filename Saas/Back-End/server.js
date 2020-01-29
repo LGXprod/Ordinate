@@ -4,6 +4,10 @@ const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const ip = require("ip");
 const faker = require("faker");
+const AES = require("mysql-aes")
+const bcrypt = require("bcrypt")
+
+const saltRounds = 10
 
 var frontEnd = "/Users/matthew/Documents/Projects/Ordinate/Saas/Front-End/";
 
@@ -15,7 +19,7 @@ console.log(ip.address());
 var connection = mysql.createConnection({
 	host: "localhost",
 	user: "root",
-	password: process.env.DB_PASSWORD, //This is not the actual password, change it so that it can connect to sql server but change it back to password when committing
+	password: process.env.DB_PASSWORD, 
 	database: "ordinateDB"
 });
 
@@ -24,20 +28,60 @@ connection.connect(function(err){
 	console.log("Connected!");
 });
 
+// bcrypt.hash("testPassword", saltRounds, function(err, hash){
+// 	if (err) throw err
+
+// 	connection.query("update client_com set password='" + hash + "' where clientID=1;")
+// 	console.log("Passowrd added")
+// })
+
+// var test = AES.encrypt("hello world :)", "testPassword")
+// console.log(AES.decrypt(test, "testPassword"))
+
 listApp.listen(3000, function(){
 	console.log("Server started on port 3000");
 });
 
+listApp.use(bodyParser.urlencoded({extended: true}));
+
 	listApp.get("/", function(req, res){
-		res.sendFile(frontEnd + "index.html");
+		res.sendFile(frontEnd + "login.html");
 	});
+
+		listApp.post("/", function(req, res){
+			var username = req.body.username
+			var password = req.body.password
+
+			var validateUsername = "select username, convert(password using utf8) as password from client_com having aes_decrypt(username,'" + process.env.usernameKey + "')='" + username + "'"
+			console.log(validateUsername)
+
+			connection.query(validateUsername, function(err, result){
+				if (err) throw err
+
+				if (result.length == 1){
+					//Check password
+					console.log(result)
+					bcrypt.compare(password, result[0].password, function(err, correct){
+						if (correct){
+							res.sendFile(frontEnd + "index.html")
+						}
+					})
+				} else {
+					res.redirect('/')
+				}
+			})
+		})
+
+	listApp.get('/css/addPatient.css', function(req, res) {
+		res.sendFile(frontEnd + "css/addPatient.css");
+	  });
 
 	listApp.get('/css/styles.css', function(req, res) {
 	  res.sendFile(frontEnd + "css/styles.css");
 	});
 
 	listApp.get("/images/logo.png", function(req, res){
-		res.sendFile(frontEnd + "/images/final/Corner-Logo4.png");
+		res.sendFile(frontEnd + "/images/Corner-Logo4.png");
 	});
 
 	listApp.get("/js/index.js", function(req, res){
@@ -148,7 +192,7 @@ adminApp.listen(4000, function(){
 	  });
 
 	adminApp.get("/Q-Admin.png", function(req, res){
-		res.sendFile(frontEnd + "images/Final/Admin-Logo.png")
+		res.sendFile(frontEnd + "images/Admin-Logo.png")
 	})
 
 	adminApp.get("/js/admin.js", function(req, res){

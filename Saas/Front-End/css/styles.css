@@ -1,6 +1,5 @@
 #logoLarge {
-	width: auto;
-	height: 12.5vh;
+	width: 7.5vw;
 	/* margin-top: -45px; */
 	vertical-align: middle;
 	/* position: absolute;
@@ -10,7 +9,7 @@
 
 #docHeader {
 	display: inline-block;
-	font-size: 6vw;
+	font-size: 4.5vw;
 }
 
 .listTheme {
