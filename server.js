@@ -84,7 +84,7 @@ listApp.use(bodyParser.urlencoded({extended: true}));
 		})
 
 	listApp.get('/css/addPatient.css', function(req, res) {
-		res.sendFile(__dirname + "/addPatient.css");
+		res.sendFile(__dirname + "/css/addPatient.css");
 	  });
 
 	listApp.get('/css/styles.css', function(req, res) {
