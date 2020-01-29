@@ -14,6 +14,8 @@ var frontEnd = "/Users/matthew/Documents/Projects/Ordinate/Saas/Front-End/";
 const listApp = express();
 const adminApp = express();
 
+listApp.set('view engine', 'ejs');
+
 console.log(ip.address());
 
 var connection = mysql.createConnection({
@@ -45,7 +47,10 @@ listApp.listen(3000, function(){
 listApp.use(bodyParser.urlencoded({extended: true}));
 
 	listApp.get("/", function(req, res){
-		res.sendFile(frontEnd + "login.html");
+		res.render("login", {
+			userWrong: false,
+			passWrong: false
+		})
 	});
 
 		listApp.post("/", function(req, res){
@@ -60,14 +65,22 @@ listApp.use(bodyParser.urlencoded({extended: true}));
 
 				if (result.length == 1){
 					//Check password
-					console.log(result)
+					//console.log(result)
 					bcrypt.compare(password, result[0].password, function(err, correct){
 						if (correct){
 							res.sendFile(frontEnd + "index.html")
+						} else {
+							res.render("login", {
+								userWrong: false,
+								passWrong: true
+							})
 						}
 					})
 				} else {
-					res.redirect('/')
+					res.render("login", {
+						userWrong: true,
+						passWrong: false
+					})
 				}
 			})
 		})
