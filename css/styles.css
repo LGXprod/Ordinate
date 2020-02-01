@@ -13,16 +13,19 @@
 }
 
 .listTheme {
-	font-family: helvetica;
+	font-family: "Verdana";
 	text-align: center;
-	margin: 0px;
+	margin: 0;
 	background-color: #222831;
 	color: #eeeeee;
+	font-size: 0;
+	margin:0 auto;
 }
 
 #mainTable {
 	display: block;
 	font-size: 3vh;
+	color: #393e46;
 }
 
 #advert {
@@ -31,13 +34,16 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
-	border: 4px solid #00adb5;
+	border: 4px solid #fce38a;
+}
+
+th {
+	font-size: 155%;
 }
 
 td {
 	width: 50vw;
 	font-size: 150%;
-	color: #eeeeee;
 }
 
 tr:nth-child(even) {
@@ -53,14 +59,14 @@ tr:nth-child(odd) {
 	position: relative;
 	width: 60vw;
 	height: 100vh;
-	left: -8px;
+	/* left: -8px; */
 	vertical-align: top;
 }
 
 .right-section {
 	display: inline-block;
 	position: relative;
-	width: 38.5vw;
+	width: 40vw;
 	height: 99vh;
 	font-size: 2vw;
 }

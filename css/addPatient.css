@@ -1,5 +1,5 @@
 #background {
-	background-color: #222831;
+    background-color: #222831;
 }
 
 .formTheme {
@@ -33,6 +33,7 @@ table {
 	margin-left: auto;
 	margin-right: auto;
     border-collapse: collapse;
+    color: white;
 }
 
 table, th, td {

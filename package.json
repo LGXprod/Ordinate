@@ -15,9 +15,12 @@
     "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
+    "express-session": "^1.17.0",
     "faker": "^4.1.0",
     "ip": "^1.1.5",
     "mysql": "^2.18.1",
-    "mysql-aes": "0.0.1"
+    "mysql-aes": "0.0.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
   }
 }

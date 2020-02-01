@@ -6,6 +6,10 @@ const ip = require("ip");
 const faker = require("faker");
 const AES = require("mysql-aes")
 const bcrypt = require("bcrypt")
+const session = require('express-session');
+// const passport = require('passport');
+// const LocalStrategy = require('passport-local').Strategy;
+
 
 const saltRounds = 10
 
@@ -42,7 +46,18 @@ listApp.listen(3000, function(){
 	console.log("Server started on port 3000");
 });
 
-listApp.use(bodyParser.urlencoded({extended: true}));
+listApp.use(bodyParser.urlencoded({extended: false})); //change back to true when done to see if it works (true is more secure)
+listApp.use(session({ secret: process.env.DB_PASSWORD }))
+
+// passport.serializeUser(function(user, done){
+// 	done(null, user.id)
+// })
+
+// passport.deserializeUser(function(username, done){
+// 	var queryString = "select username, password"
+	
+// 	connection.query()
+// })
 
 	listApp.get("/", function(req, res){
 		res.render("login", {
