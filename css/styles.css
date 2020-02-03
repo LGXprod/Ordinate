@@ -1,15 +1,19 @@
 #logoLarge {
-	width: 7.5vw;
-	/* margin-top: -45px; */
-	vertical-align: middle;
-	/* position: absolute;
-	top: 0px;
-	left: 0px; */
+	height: 15%;
+	display: inline-block;
 }
 
 #docHeader {
+	/* display: inline-block; */
+	position: relative;
+	font-size: 9.5vh;
+	bottom: 4.5vh;
+}
+
+#top-left {
 	display: inline-block;
-	font-size: 4.5vw;
+	height: 15%;
+	text-align: center;
 }
 
 .listTheme {
@@ -24,8 +28,10 @@
 
 #mainTable {
 	display: block;
-	font-size: 3vh;
 	color: #393e46;
+	font-size: 4vh;
+	position: absolute;
+	bottom: 0;
 }
 
 #advert {
@@ -38,12 +44,14 @@
 }
 
 th {
-	font-size: 155%;
+	font-size: 125%;
 }
 
 td {
 	width: 50vw;
 	font-size: 150%;
+	padding: 0;
+	margin: 0;
 }
 
 tr:nth-child(even) {
@@ -80,35 +88,3 @@ tr:nth-child(odd) {
 .center {
 	text-align: center;
 }
-
-/* .center {
-	 margin: auto;
-	 width: auto;
-	 text-align: center;
-	 padding: 0px;
-	 position: relative;
-} */
-
-/* .right {
-	float: right;
-	height: 100%;
-	padding: 0px;
-	display: inline-block;
-}
-
-.left {
-	float: left;
-	height: 100%;
-	padding: 0px;
-	display: inline-block;
-}
-
-.vertical-center {
-	 margin: 0;
-	  position: absolute;
-	  top: 50%;
-	  -ms-transform: translateY(-50%);
-	  transform: translateY(-50%);
-} */
-
-/*bruh*/
