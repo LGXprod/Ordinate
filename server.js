@@ -76,8 +76,6 @@ listApp.use(session({ secret: process.env.DB_PASSWORD }))
 				if (err) throw err
 
 				if (result.length == 1){
-					//Check password
-					//console.log(result)
 					bcrypt.compare(password, result[0].password, function(err, correct){
 						if (correct){
 							res.sendFile(__dirname + "/index.html")
