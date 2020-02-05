@@ -1,4 +1,4 @@
-# Q
+# Ordinate
 Formerly known as Ordinate, Q is a queuing tool for organisations with waiting rooms. The core feature of Q is that enables organisations to display the position of a customer in a list anonymously. This combined with an accurate, dynamic ETAs, which is generated from an algorithm using previous Q data, increases customer satisfaction and organisation efficency in a multitude of ways:
 - Patients are far less likely to get angry or stressed about the time they have waited as ETAs will eventually become more accurate than a receptionist's ETA. As well as the fact that they can see the position in the queue so they don't need to question whether a doctor has skipped them or if a receptionist has done something wrong.
 - Patients can make a decision as to whether they have enough time to see a doctor with out speaking to a receptionist.
