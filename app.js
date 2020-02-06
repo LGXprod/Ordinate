@@ -15,6 +15,7 @@ const session = require('express-session');
 const loginController = require("./controllers/loginController");
 const listController = require("./controllers/listController");
 const adminController = require("./controllers/adminController");
+const patient = require("./models/user")
 
 const saltRounds = 10
 
@@ -62,7 +63,7 @@ adminApp.use(express.static(__dirname + "/public"));
 //   });
 
 //call controllers
-loginController(listApp, connection, bcrypt);
+loginController(listApp, connection, bcrypt, patient);
 listController(listApp, connection);
 
 adminController(adminApp, connection);
