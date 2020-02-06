@@ -15,7 +15,9 @@ const session = require('express-session');
 const loginController = require("./controllers/loginController");
 const listController = require("./controllers/listController");
 const adminController = require("./controllers/adminController");
-const patient = require("./models/user")
+const user = require("./models/user");
+const patientList = require("./models/patientList");
+const doctorList = require("./models/doctorList");
 
 const saltRounds = 10
 
@@ -63,12 +65,11 @@ adminApp.use(express.static(__dirname + "/public"));
 //   });
 
 //call controllers
-loginController(listApp, connection, bcrypt, patient);
-listController(listApp, connection);
+loginController(listApp, connection, bcrypt, user);
+listController(listApp, connection, patientList);
 
-adminController(adminApp, connection);
+adminController(adminApp, connection, doctorList, patientList);
 listController(adminApp, connection);
-
 
 	function qlistTest(){
 		var testDataQuery = "select ordinateID from patient where dob='2010-10-10'"

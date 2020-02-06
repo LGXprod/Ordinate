@@ -1,4 +1,4 @@
-module.exports = function(app, connection){
+module.exports = function(app, connection, doctorList, patientList){
     app.get("/", function(req, res){
 		res.render("admin");
 	});
@@ -8,26 +8,26 @@ module.exports = function(app, connection){
     });
     
     app.get("/availableDocs", function(req, res){
-		connection.query("select doctorID, fName, sName from doctor", function(err, results){
-			if (err) throw err;
-
-			var docList = [];
-
-			for(i in results) {
-				docList[i] = {
-					doctorID: results[i].doctorID,
-					fName: results[i].fName,
-					sName: results[i].sName
-				}
-			}
-
-			res.json(docList);
-		})
+		doctorList.getDoctors(req, res, connection);
     });
     
     app.post("/", function(req, res, next){
 		var id = req.body.ID;
 		var doctorID = req.body.doctor;
+
+		patientList.validatePatientByID(connection, id).then((valid) => {
+			if (valid) {
+				patientList.addPatientToList(connection, id, doctorID).then((message) => {
+					console.log(message);
+				}).catch((err) => {
+					console.log(err);
+				});
+			} else {
+				//res.send("<script>alert('Ordinate ID " + parseInt(id) + " does not exist.')</script>");
+			}
+		}).catch((error) => {
+			console.log(error);
+		});
 
 		var validQuery = "select ordinateID from patient where ordinateID=" + id + ";";
 		console.log(validQuery);
@@ -36,21 +36,6 @@ module.exports = function(app, connection){
 			if (err) throw err;
 
 			console.log(result[0]);
-
-			if (result[0] != null) { 
-				console.log("Valid id");
-
-				var insertQuery = "insert into qlist (ordinateID, doctorID) values (" + id + ", " 
-				+ doctorID + ")";
-				console.log(insertQuery);
-
-				connection.query(insertQuery, function(err, result, fields){
-					if (err) throw err;
-					console.log("Successful");
-				});
-			} else {
-				res.send("<script>alert('Ordinate ID " + parseInt(id) + " does not exist.')</script>");
-			}
 		});
 
 		res.redirect('back');
